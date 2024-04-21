@@ -1,10 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Categoria } from "../entities/categoria.entities";
-import { ILike, Repository } from "typeorm";
+import { DeleteResult, ILike, Repository } from "typeorm";
 
 @Injectable()
 export class CategoriaService{
+    delete(id: number) {
+        throw new Error("Method not implemented.");
+    }
     categoriaRepositoryRepository: any;
     constructor(
         @InjectRepository(Categoria)
@@ -36,4 +39,28 @@ export class CategoriaService{
             }
         })
     }
+
+    async create(categoria: Categoria): Promise<Categoria>{
+        return await this.categoriaRepository.save(categoria);
+    }
+
+    async update(categoria: Categoria): Promise<Categoria>{
+
+        let buscaCategoria: Categoria = await this.findById(categoria.id);
+
+            if (!buscaCategoria || !categoria.id)
+                throw new HttpException('A Categoria não foi encontrada!', HttpStatus.NOT_FOUND)
+
+            return await this.categoriaRepository.save(categoria);
+        }
+
+        async Delete(id: number): Promise<DeleteResult>{
+
+        let buscaCategoria: Categoria = await this.findById(id);
+
+            if (!buscaCategoria) 
+                throw new HttpException('A Categoria não foi encontrada!', HttpStatus.NOT_FOUND)
+
+            return await this.categoriaRepository.delete(id); 
+        }
 }

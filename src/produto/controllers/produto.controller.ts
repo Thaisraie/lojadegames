@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
 import { ProdutoService } from "../services/produto.service";
 import { Produto } from "../entities/produto.entity";
 import { ILike } from "typeorm";
@@ -25,4 +25,23 @@ export class ProdutoController{
     findByNome(@Param('nome') titulo: string): Promise<Produto[]>{
         return this.produtoService.findByNome('nome');
     }   
+
+    @Post()
+    @HttpCode(HttpStatus.CREATED)
+    create(@Body() produto: Produto): Promise<Produto> {
+        return this.produtoService.create(produto);
+    }
+
+    @Put() 
+    @HttpCode(HttpStatus.OK)
+    update(@Body() produto: Produto): Promise<Produto> {
+        return this.produtoService.update(produto);
+    }
+
+    @Delete('/:id') 
+    @HttpCode(HttpStatus.NO_CONTENT)
+    delete(@Param('id', ParseIntPipe) id: number){
+        return this.produtoService.delete(id);
+    }
+
 }
