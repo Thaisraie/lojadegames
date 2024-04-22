@@ -18,6 +18,7 @@ import { ProdutoModule } from './produto/produto.module';
       database: 'db_lojadegames',
       entities: [Categoria, Produto],
       synchronize: true,
+      logging: true, 
     }),
     CategoriaModule, ProdutoModule
   ],

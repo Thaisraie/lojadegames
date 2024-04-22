@@ -2,20 +2,22 @@ import { Delete, HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, ILike, Repository } from "typeorm";
 import { Produto } from "../entities/produto.entity";
+import { CategoriaService } from "src/categoria/services/categoria.service";
 
 @Injectable()
 export class ProdutoService{
-    delete(id: number) {
-        throw new Error("Method not implemented.");
-    }
-    produtoRepository: any;
     constructor(
         @InjectRepository(Produto)
-        private categoriaRepository: Repository<Produto>
+        private produtoRepository: Repository<Produto>,
+        private categoriaService: CategoriaService
     ){}
 
     async findAll(): Promise<Produto[]>{
-        return await this.produtoRepository.find(); 
+        return await this.produtoRepository.find({
+            relations: {
+                categoria: true
+            }
+        }); 
     }
 
     async findById(id: number): Promise<Produto> {
@@ -33,7 +35,7 @@ export class ProdutoService{
     }
 
     async findByNome(nome: string): Promise<Produto[]>{
-        return await this.produtoRepository.Find({
+        return await this.produtoRepository.find({
             where:{
                 nome: ILike(`%${nome}%`) 
             }
@@ -41,6 +43,17 @@ export class ProdutoService{
     }
 
     async create(produto: Produto): Promise<Produto>{
+        
+        if(produto.categoria){
+
+            let categoria = await this.categoriaService.findById(produto.categoria.id)
+
+            if(!categoria)
+                throw new HttpException('Categpria não encontrada!', HttpStatus.NOT_FOUND)
+
+            return await this.produtoRepository.save(produto);
+        }
+
         return await this.produtoRepository.save(produto);
     }
 
@@ -50,6 +63,16 @@ export class ProdutoService{
 
             if (!buscaProduto || !produto.id)
                 throw new HttpException('O Produto não foi encontrado!', HttpStatus.NOT_FOUND)
+
+            if(produto.categoria){
+
+                let categoria = await this.categoriaService.findById(produto.categoria.id)
+    
+                if(!categoria)
+                    throw new HttpException('Categpria não encontrada!', HttpStatus.NOT_FOUND)
+    
+                return await this.produtoRepository.save(produto);
+            }
 
             return await this.produtoRepository.save(produto);
     }
