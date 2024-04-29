@@ -1,0 +1,42 @@
+Nome: Marvel's Spider-Man
+
+preço: 167.99
+
+foto: https://m.media-amazon.com/images/I/815TEngwF7L._AC_SL1500_.jpg
+
+categoria: Aventura
+
+___________________________
+
+Nome: Jogo FiFA 2023 
+
+preço: 119.89
+
+foto: https://www.atacadogames.com/imagem/jogos/jogo-fifa-2023-para-ps4/2/148614.jpg?pfdrid_c=true
+
+categoria: Esporte
+
+__________________________
+
+Nome: Jogo Sonic Origins Plus 
+
+preço: 177.86
+
+foto: https://www.atacadogames.com/imagem/jogos/jogo-sonic-origins-plus-para-ps4/2/208387.jpg?pfdrid_c=true
+
+categoria: Ação
+
+
+
+
+_____________________________
+
+
+Nome: The Legend Of Zelda Tears Of The Kingdom
+
+preço: 249.90
+
+foto: https://images-americanas.b2w.io/produtos/7478765626/imagens/jogo-the-legend-of-zelda-tears-of-the-kingdom-hbcpaxn7a/7478765626_1_xlarge.jpg
+
+categoria: Aventura
+

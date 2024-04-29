@@ -6,6 +6,9 @@ import { Categoria } from './categoria/entities/categoria.entities';
 import { Produto } from './produto/entities/produto.entity';
 import { CategoriaModule } from './categoria/categoria.module';
 import { ProdutoModule } from './produto/produto.module';
+import { AuthModule } from './auth/auth.module';
+import { Usuario } from './usuario/entities/usuario.entity';
+import { UsuarioModule } from './usuario/usuario.module';
 
 @Module({
   imports: [
@@ -16,11 +19,11 @@ import { ProdutoModule } from './produto/produto.module';
       username: 'root',
       password: 'root',
       database: 'db_lojadegames',
-      entities: [Categoria, Produto],
+      entities: [Categoria, Produto, Usuario], // Gera tabela no banco de dados.
       synchronize: true,
       logging: true, 
     }),
-    CategoriaModule, ProdutoModule
+    CategoriaModule, ProdutoModule, AuthModule, UsuarioModule // Registrar a classe para o nest reconhecer os módulos.
   ],
   controllers: [],
   providers: [],

@@ -15,8 +15,9 @@ export class ProdutoService{
     async findAll(): Promise<Produto[]>{
         return await this.produtoRepository.find({
             relations: {
-                categoria: true
-            }
+                categoria: true,
+                usuario: true
+            } // Relacionamento: lista as categorias e usuários.
         }); 
     }
 
@@ -38,6 +39,10 @@ export class ProdutoService{
         return await this.produtoRepository.find({
             where:{
                 nome: ILike(`%${nome}%`) 
+            },
+            relations: {
+                categoria: true,
+                usuario: true
             }
         })
     }
@@ -69,7 +74,7 @@ export class ProdutoService{
                 let categoria = await this.categoriaService.findById(produto.categoria.id)
     
                 if(!categoria)
-                    throw new HttpException('Categpria não encontrada!', HttpStatus.NOT_FOUND)
+                    throw new HttpException('Categoria não encontrada!', HttpStatus.NOT_FOUND)
     
                 return await this.produtoRepository.save(produto);
             }
