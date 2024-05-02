@@ -1,8 +1,9 @@
 import { Transform, TransformFnParams } from "class-transformer";
-import { IsNotEmpty } from "class-validator";
+import { IsNotEmpty, IsNumber } from "class-validator";
 import { Categoria } from "src/categoria/entities/categoria.entities";
 import { Usuario } from "src/usuario/entities/usuario.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+
 
 @Entity({name: "tb_produtos"})
 export class Produto {
@@ -15,7 +16,7 @@ export class Produto {
     @Column({length: 200, nullable: false})
     nome: string;
 
-    @Transform(({ value }: TransformFnParams) => value?.trim())
+    @IsNumber({maxDecimalPlaces: 2}) // Mostra duas casas decimais. 
     @Column({type: "decimal", precision: 10, scale: 2})
     preco: number;
 

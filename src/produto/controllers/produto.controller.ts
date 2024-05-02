@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from "@nestjs/common";
 import { ProdutoService } from "../services/produto.service";
-import { Produto } from "../entities/produto.entity";
-import { ILike } from "typeorm";
+import { Produto } from "../entities/produto.entities";
+import { JwtAuthGuard } from "../../auth/guard/jwt-auth.guard";
 
+@UseGuards(JwtAuthGuard) // Bloqueio total da classe
 @Controller("/produto")
 export class ProdutoController{
 
@@ -22,7 +23,7 @@ export class ProdutoController{
 
     @Get('/nome/:nome') 
     @HttpCode(HttpStatus.OK)
-    findByNome(@Param('nome') titulo: string): Promise<Produto[]>{
+    findByNome(@Param('nome') nome: string): Promise<Produto[]>{
         return this.produtoService.findByNome('nome');
     }   
 

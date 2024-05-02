@@ -1,7 +1,7 @@
-import { Delete, HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { DeleteResult, ILike, Repository } from "typeorm";
-import { Produto } from "../entities/produto.entity";
+import { Produto } from "../entities/produto.entities";
 import { CategoriaService } from "src/categoria/services/categoria.service";
 
 @Injectable()
@@ -54,7 +54,7 @@ export class ProdutoService{
             let categoria = await this.categoriaService.findById(produto.categoria.id)
 
             if(!categoria)
-                throw new HttpException('Categpria não encontrada!', HttpStatus.NOT_FOUND)
+                throw new HttpException('Categoria não encontrada!', HttpStatus.NOT_FOUND)
 
             return await this.produtoRepository.save(produto);
         }
